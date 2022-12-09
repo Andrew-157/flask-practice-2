@@ -2,7 +2,7 @@ from flask import Flask, request
 
 app = Flask(__name__)
 
-users_ids = []
+users_ids = {}
 
 
 @app.route('/')
@@ -18,13 +18,14 @@ def users(user_id):
         if user_id in users_ids:
             return f"User with {user_id} already exists", 409
 
-        users_ids.append(user_id)
+        users_ids[user_id] = request.json
+
         return f"User with id: {user_id} has been created"
 
     if user_id not in users_ids:
         return "User not found", 404
 
-    return f"User's id: {user_id}"
+    return f"User's id: {user_id}, user's info: {users_ids[user_id]}"
 
 
 if __name__ == '__main__':
