@@ -8,12 +8,8 @@ def index():
     return "Hello World!"
 
 
-@app.route('/users/<user_id>')
+@app.route('/users/<int:user_id>')
 def users(user_id):
-    try:
-        user_id = int(user_id)
-    except ValueError:
-        return "Validation error. User id should be integer.", 400
 
     return f"User id: {user_id}"
 
