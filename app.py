@@ -14,8 +14,11 @@ def index():
 def users(user_id):
 
     if request.method == 'POST':
+
+        if user_id in users_ids:
+            return f"User with {user_id} already exists", 409
+
         users_ids.append(user_id)
-        print(users_ids)
         return f"User with id: {user_id} has been created"
 
     if user_id not in users_ids:
