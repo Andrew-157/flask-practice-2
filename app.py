@@ -10,7 +10,7 @@ def index():
     return "Hello World!"
 
 
-@app.route('/users/<int:user_id>', methods=['GET', 'POST'])
+@app.route('/users/<int:user_id>', methods=['GET', 'POST', 'PUT'])
 def users(user_id):
 
     if request.method == 'POST':
@@ -18,14 +18,16 @@ def users(user_id):
         if user_id in users_ids:
             return f"User with {user_id} already exists", 409
 
-        nickname = request.form.get('nickname')
-        age = request.form.get('age')
-        users_ids[user_id] = {'nickname': nickname, 'age': age}
+        users_ids[user_id] = request.json
 
         return f"User with id: {user_id} has been created"
 
     if user_id not in users_ids:
         return "User not found", 404
+
+    if request.method == 'PUT':
+
+        users_ids[user_id] = request.json
 
     return f"User's id: {user_id}, user's info: {users_ids[user_id]}"
 
