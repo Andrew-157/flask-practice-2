@@ -10,7 +10,7 @@ def index():
     return "Hello World!"
 
 
-@app.route('/users/<int:user_id>', methods=['GET', 'POST', 'PUT'])
+@app.route('/users/<int:user_id>', methods=['GET', 'POST', 'PUT', 'DELETE'])
 def users(user_id):
 
     if request.method == 'POST':
@@ -28,6 +28,11 @@ def users(user_id):
     if request.method == 'PUT':
 
         users_ids[user_id] = request.json
+
+    if request.method == 'DELETE':
+
+        del users_ids[user_id]
+        return f"User with id: {user_id} was deleted"
 
     return f"User's id: {user_id}, user's info: {users_ids[user_id]}"
 
